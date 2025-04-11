@@ -170,8 +170,14 @@ When running Spark SQL, the following are expected:
 -- show tables in Lance Directory /my/dir
 SHOW TABLES IN `dir:/my/dir`
      
+-- read t1 in Lance Directory /my/dir
+SELECT * FROM `dir:/my/dir`.t1
+     
 -- show tables in namespace ns1 in https://my.lance.catalog.com
-SHOW TABLES IN `ns1`
+SHOW TABLES IN ns1
+
+-- read t2 in namespace ns1 in https://my.lance.catalog.com
+SELECT * FROM ns1.t2
 ```
 
 
