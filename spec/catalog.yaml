@@ -91,7 +91,42 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerErrorResponse'
 
+  /v1/namespaces/{ns}/tables:
+    post:
+      tags: [ Table ]
+      summary: >
+        Create a new table in the given namespace. A table represents a lance dataset. 
+        In Lance catalog, a table must be hosted in a namespace.
+      operationId: CreateTable
+      parameters:
+        - $ref: '#/components/parameters/ns'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CreateTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+
 components:
+  parameters:
+    ns:
+      name: ns
+      in: path
+      required: true
+      schema: { type: string }
 
   schemas:
     ErrorModel:
@@ -150,6 +185,272 @@ components:
           example: { "created_at": "1452120468" }
           default: { }
 
+    CreateTableRequest:
+      type: object
+      required: [ name, definition ]
+      properties:
+        name: { type: string }
+        definition:
+          $ref: '#/components/schemas/TableDefinition'
+        mode:
+          type: string
+          enum: [ Create, ExistOk, Overwrite ]
+        write_options:
+          type: object
+          additionalProperties: true
+          description: Optional write options for the table creation.
+          nullable: true
+
+    TableDefinition:
+      type: object
+      required: [ column_definitions, schema ]
+      properties:
+        column_definitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnDefinition'
+        schema:
+          $ref: '#/components/schemas/Schema'
+
+    ColumnDefinition:
+      type: object
+      required: [ kind ]
+      properties:
+        kind:
+          $ref: '#/components/schemas/ColumnKind'
+
+    ColumnKind:
+      type: string
+      enum: [ Physical, Embedding ]
+
+    Schema:
+      type: object
+      required: [ fields, metadata ]
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        metadata:
+          type: object
+          additionalProperties: { type: string }
+
+    Field:
+      type: object
+      required: [ name, data_type, nullable, dict_id, dict_is_ordered, metadata ]
+      properties:
+        name: { type: string }
+        data_type:
+          $ref: '#/components/schemas/DataType'
+        nullable: { type: boolean }
+        dict_id:
+          type: integer
+          format: int64
+          deprecated: true
+        dict_is_ordered: { type: boolean }
+        metadata:
+          type: object
+          additionalProperties: { type: string }
+
+    DataType:
+      oneOf:
+        - enum: [ Null, Boolean, Int8, Int16, Int32, Int64, UInt8, UInt16, UInt32, UInt64, Float16, Float32, Float64, Date32, Date64, Binary, LargeBinary, BinaryView, Utf8, LargeUtf8, Utf8View ]
+          type: string
+          description: Primitive data types
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ Timestamp ]
+            time_unit:
+              $ref: '#/components/schemas/TimeUnit'
+            timezone:
+              type: string
+              nullable: true
+          description: Timestamp with time unit and optional timezone
+
+        - type: object
+          required: [ type, time_unit ]
+          properties:
+            type:
+              type: string
+              enum: [ Time32, Time64, Duration ]
+            time_unit:
+              $ref: '#/components/schemas/TimeUnit'
+
+        - type: object
+          required: [ type, interval_unit ]
+          properties:
+            type:
+              type: string
+              enum: [ Interval ]
+            interval_unit:
+              $ref: '#/components/schemas/IntervalUnit'
+
+        - type: object
+          required: [ type, size ]
+          properties:
+            type:
+              type: string
+              enum: [ FixedSizeBinary ]
+            size:
+              type: integer
+              format: int32
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ List ]
+            element:
+              $ref: '#/components/schemas/Field'
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ ListView ]
+            element:
+              $ref: '#/components/schemas/Field'
+
+        - type: object
+          required: [ type, size ]
+          properties:
+            type:
+              type: string
+              enum: [ FixedSizeList ]
+            element:
+              $ref: '#/components/schemas/Field'
+            size:
+              type: integer
+              format: int32
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ LargeList ]
+            element:
+              $ref: '#/components/schemas/Field'
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ LargeListView ]
+            element:
+              $ref: '#/components/schemas/Field'
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ Struct ]
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/Field'
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ Union ]
+            union_fields:
+              $ref: '#/components/schemas/UnionFields'
+            union_mode:
+              $ref: '#/components/schemas/UnionMode'
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ Dictionary ]
+            key_type:
+              $ref: '#/components/schemas/DataType'
+            value_type:
+              $ref: '#/components/schemas/DataType'
+
+        - type: object
+          required: [ type, precision, scale ]
+          properties:
+            type:
+              type: string
+              enum: [ Decimal128 ]
+            precision:
+              type: integer
+              format: uint8
+              minimum: 1
+              maximum: 38
+            scale:
+              type: integer
+              format: int8
+
+        - type: object
+          required: [ type, precision, scale ]
+          properties:
+            type:
+              type: string
+              enum: [ Decimal256 ]
+            precision:
+              type: integer
+              format: uint8
+              minimum: 1
+              maximum: 76
+            scale:
+              type: integer
+              format: int8
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ Map ]
+            key_sorted:
+              type: boolean
+            element:
+              $ref: '#/components/schemas/Field'
+
+        - type: object
+          required: [ type ]
+          properties:
+            type:
+              type: string
+              enum: [ RunEndEncoded ]
+            run_ends:
+              $ref: '#/components/schemas/Field'
+            values:
+              $ref: '#/components/schemas/Field'
+
+    TimeUnit:
+      type: string
+      enum: [ Second, Millisecond, Microsecond, Nanosecond ]
+      description: Time unit for temporal types
+
+    IntervalUnit:
+      type: string
+      enum: [ YearMonth, DayTime, MonthDayNano ]
+      description: Interval units
+
+    UnionMode:
+      type: string
+      enum: [ Sparse, Dense ]
+
+    UnionFields:
+      type: array
+      items:
+        $ref: '#/components/schemas/Field'
+
   responses:
     CreateNamespaceResponse:
       description:
@@ -165,6 +466,21 @@ components:
             "namespace": [ "lance.ns1" ],
             "properties": { "created_at": "1452120468" }
           }
+
+    CreateTableResponse:
+      type: object
+      required:
+        - name
+      properties:
+        name: { type: string }
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description:
+            Properties stored on the table, if supported by the server.
+          example: { "created_at": "1452120468" }
+          default: { }
 
     BadRequestErrorResponse:
       description:
