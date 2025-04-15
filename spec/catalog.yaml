@@ -194,7 +194,7 @@ components:
           $ref: '#/components/schemas/TableDefinition'
         mode:
           type: string
-          enum: [ Create, ExistOk, Overwrite ]
+          enum: [ CREATE, EXIST_OK, OVERWRITE ]
         write_options:
           type: object
           additionalProperties: true
@@ -221,7 +221,7 @@ components:
 
     ColumnKind:
       type: string
-      enum: [ Physical, Embedding ]
+      enum: [ PHYSICAL, EMBEDDING ]
 
     Schema:
       type: object
