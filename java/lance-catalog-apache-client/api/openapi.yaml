@@ -161,6 +161,35 @@ paths:
       - application/json
     parameters:
     - $ref: '#/components/parameters/namespace'
+  /v1/namespaces/{ns}/tables/{table}:
+    get:
+      description: Get a table's detailed properties under a specified namespace from
+        the catalog.".
+      operationId: GetTable
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/table'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetTableResponse'
+        "400":
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        "403":
+          $ref: '#/components/responses/ForbiddenResponse'
+        "404":
+          $ref: '#/components/responses/NotFoundResponse'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        "5XX":
+          $ref: '#/components/responses/ServerErrorResponse'
+      summary: Get a table from the catalog
+      tags:
+      - Namespace
+      x-accepts:
+      - application/json
+    parameters:
+    - $ref: '#/components/parameters/namespace'
+    - $ref: '#/components/parameters/table'
 components:
   examples:
     ListNamespacesEmptyExample:
@@ -179,6 +208,15 @@ components:
       explode: false
       in: path
       name: ns
+      required: true
+      schema:
+        type: string
+      style: simple
+    table:
+      description: A table name.
+      explode: false
+      in: path
+      name: table
       required: true
       schema:
         type: string
@@ -216,6 +254,12 @@ components:
             $ref: '#/components/schemas/GetNamespaceResponse'
       description: "Returns a namespace, as well as any properties stored on the namespace\
         \ if namespace properties are supported by the server."
+    GetTableResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTableResult'
+      description: Table properties result when loading a table
     BadRequestErrorResponse:
       content:
         application/json:
@@ -406,4 +450,14 @@ components:
           nullable: true
       required:
       - namespace
+    GetTableResult:
+      description: |
+        Result used when a table is successfully loaded.
+      example:
+        properties:
+          key: properties
+      properties:
+        properties:
+          additionalProperties:
+            type: string
 

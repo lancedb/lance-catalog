@@ -163,6 +163,31 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerErrorResponse'
 
+  /v1/namespaces/{ns}/tables/{table}:
+    parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/table'
+
+    get:
+      tags: [ Namespace ]
+      summary: Get a table from the catalog
+      operationId: GetTable
+      description:
+        Get a table's detailed properties under a specified namespace from the catalog.".
+      responses:
+        200:
+          $ref: '#/components/responses/GetTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+
 components:
   parameters:
     namespace:
@@ -171,6 +196,15 @@ components:
       required: true
       description:
         The name of the namespace.
+      schema:
+        type: string
+
+    table:
+      name: table
+      in: path
+      description:
+        A table name.
+      required: true
       schema:
         type: string
 
@@ -261,6 +295,18 @@ components:
           default: { }
           nullable: true
 
+    GetTableResult:
+      description: |
+        Result used when a table is successfully loaded.
+      type: object
+      required:
+        - metadata
+      properties:
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+
   responses:
     CreateNamespaceResponse:
       description:
@@ -297,6 +343,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GetNamespaceResponse'
+
+    GetTableResponse:
+      description: Table properties result when loading a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTableResult'
 
     BadRequestErrorResponse:
       description:
