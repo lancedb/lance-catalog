@@ -101,7 +101,7 @@ No authorization required
 
 ## get_table
 
-> models::GetTableResult get_table(ns, table)
+> models::GetTableResponse get_table(ns, table)
 Get a table from the catalog
 
 Get a table's detailed properties under a specified namespace from the catalog.\".
@@ -116,7 +116,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::GetTableResult**](GetTableResult.md)
+[**models::GetTableResponse**](GetTableResponse.md)
 
 ### Authorization
 

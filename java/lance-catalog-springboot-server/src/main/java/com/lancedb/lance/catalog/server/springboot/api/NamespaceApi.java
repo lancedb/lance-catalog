@@ -17,7 +17,7 @@ import com.lancedb.lance.catalog.server.springboot.model.CreateNamespaceRequest;
 import com.lancedb.lance.catalog.server.springboot.model.CreateNamespaceResponse;
 import com.lancedb.lance.catalog.server.springboot.model.ErrorModel;
 import com.lancedb.lance.catalog.server.springboot.model.GetNamespaceResponse;
-import com.lancedb.lance.catalog.server.springboot.model.GetTableResult;
+import com.lancedb.lance.catalog.server.springboot.model.GetTableResponse;
 import com.lancedb.lance.catalog.server.springboot.model.ListNamespacesResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -473,7 +473,7 @@ public interface NamespaceApi {
             content = {
               @Content(
                   mediaType = "application/json",
-                  schema = @Schema(implementation = GetTableResult.class))
+                  schema = @Schema(implementation = GetTableResponse.class))
             }),
         @ApiResponse(
             responseCode = "400",
@@ -523,7 +523,7 @@ public interface NamespaceApi {
       method = RequestMethod.GET,
       value = "/v1/namespaces/{ns}/tables/{table}",
       produces = {"application/json"})
-  default ResponseEntity<GetTableResult> getTable(
+  default ResponseEntity<GetTableResponse> getTable(
       @Parameter(
               name = "ns",
               description = "The name of the namespace.",

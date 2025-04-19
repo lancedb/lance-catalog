@@ -7,5 +7,5 @@ src/main/java/com/lancedb/lance/catalog/server/springboot/model/CreateNamespaceR
 src/main/java/com/lancedb/lance/catalog/server/springboot/model/CreateNamespaceResponse.java
 src/main/java/com/lancedb/lance/catalog/server/springboot/model/ErrorModel.java
 src/main/java/com/lancedb/lance/catalog/server/springboot/model/GetNamespaceResponse.java
-src/main/java/com/lancedb/lance/catalog/server/springboot/model/GetTableResult.java
+src/main/java/com/lancedb/lance/catalog/server/springboot/model/GetTableResponse.java
 src/main/java/com/lancedb/lance/catalog/server/springboot/model/ListNamespacesResponse.java

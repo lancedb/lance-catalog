@@ -223,7 +223,7 @@ No authorization required
 
 ## getTable
 
-> GetTableResult getTable(ns, table)
+> GetTableResponse getTable(ns, table)
 
 Get a table from the catalog
 
@@ -248,7 +248,7 @@ public class Example {
         String ns = "ns_example"; // String | The name of the namespace.
         String table = "table_example"; // String | A table name.
         try {
-            GetTableResult result = apiInstance.getTable(ns, table);
+            GetTableResponse result = apiInstance.getTable(ns, table);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling NamespaceApi#getTable");
@@ -271,7 +271,7 @@ public class Example {
 
 ### Return type
 
-[**GetTableResult**](GetTableResult.md)
+[**GetTableResponse**](GetTableResponse.md)
 
 ### Authorization
 

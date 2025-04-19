@@ -11,17 +11,17 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// GetTableResult : Result used when a table is successfully loaded. 
+/// GetTableResponse : Result used when a table is successfully loaded. 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct GetTableResult {
+pub struct GetTableResponse {
     #[serde(rename = "properties", skip_serializing_if = "Option::is_none")]
     pub properties: Option<std::collections::HashMap<String, String>>,
 }
 
-impl GetTableResult {
+impl GetTableResponse {
     /// Result used when a table is successfully loaded. 
-    pub fn new() -> GetTableResult {
-        GetTableResult {
+    pub fn new() -> GetTableResponse {
+        GetTableResponse {
             properties: None,
         }
     }

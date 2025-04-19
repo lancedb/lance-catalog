@@ -26,20 +26,22 @@ import java.util.Map;
 import java.util.Objects;
 
 /** Result used when a table is successfully loaded. */
-@Schema(name = "GetTableResult", description = "Result used when a table is successfully loaded. ")
+@Schema(
+    name = "GetTableResponse",
+    description = "Result used when a table is successfully loaded. ")
 @Generated(
     value = "org.openapitools.codegen.languages.SpringCodegen",
     comments = "Generator version: 7.12.0")
-public class GetTableResult {
+public class GetTableResponse {
 
   @Valid private Map<String, String> properties = new HashMap<>();
 
-  public GetTableResult properties(Map<String, String> properties) {
+  public GetTableResponse properties(Map<String, String> properties) {
     this.properties = properties;
     return this;
   }
 
-  public GetTableResult putPropertiesItem(String key, String propertiesItem) {
+  public GetTableResponse putPropertiesItem(String key, String propertiesItem) {
     if (this.properties == null) {
       this.properties = new HashMap<>();
     }
@@ -70,8 +72,8 @@ public class GetTableResult {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetTableResult getTableResult = (GetTableResult) o;
-    return Objects.equals(this.properties, getTableResult.properties);
+    GetTableResponse getTableResponse = (GetTableResponse) o;
+    return Objects.equals(this.properties, getTableResponse.properties);
   }
 
   @Override
@@ -82,7 +84,7 @@ public class GetTableResult {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetTableResult {\n");
+    sb.append("class GetTableResponse {\n");
     sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();

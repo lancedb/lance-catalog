@@ -21,7 +21,7 @@ import com.lancedb.lance.catalog.client.apache.Pair;
 import com.lancedb.lance.catalog.client.apache.model.CreateNamespaceRequest;
 import com.lancedb.lance.catalog.client.apache.model.CreateNamespaceResponse;
 import com.lancedb.lance.catalog.client.apache.model.GetNamespaceResponse;
-import com.lancedb.lance.catalog.client.apache.model.GetTableResult;
+import com.lancedb.lance.catalog.client.apache.model.GetTableResponse;
 import com.lancedb.lance.catalog.client.apache.model.ListNamespacesResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -274,10 +274,10 @@ public class NamespaceApi extends BaseApi {
    *
    * @param ns The name of the namespace. (required)
    * @param table A table name. (required)
-   * @return GetTableResult
+   * @return GetTableResponse
    * @throws ApiException if fails to make API call
    */
-  public GetTableResult getTable(String ns, String table) throws ApiException {
+  public GetTableResponse getTable(String ns, String table) throws ApiException {
     return this.getTable(ns, table, Collections.emptyMap());
   }
 
@@ -288,10 +288,10 @@ public class NamespaceApi extends BaseApi {
    * @param ns The name of the namespace. (required)
    * @param table A table name. (required)
    * @param additionalHeaders additionalHeaders for this call
-   * @return GetTableResult
+   * @return GetTableResponse
    * @throws ApiException if fails to make API call
    */
-  public GetTableResult getTable(String ns, String table, Map<String, String> additionalHeaders)
+  public GetTableResponse getTable(String ns, String table, Map<String, String> additionalHeaders)
       throws ApiException {
     Object localVarPostBody = null;
 
@@ -333,7 +333,7 @@ public class NamespaceApi extends BaseApi {
 
     String[] localVarAuthNames = new String[] {};
 
-    TypeReference<GetTableResult> localVarReturnType = new TypeReference<GetTableResult>() {};
+    TypeReference<GetTableResponse> localVarReturnType = new TypeReference<GetTableResponse>() {};
     return apiClient.invokeAPI(
         localVarPath,
         "GET",

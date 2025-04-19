@@ -188,7 +188,7 @@ pub async fn get_namespace(configuration: &configuration::Configuration, ns: &st
 }
 
 /// Get a table's detailed properties under a specified namespace from the catalog.\".
-pub async fn get_table(configuration: &configuration::Configuration, ns: &str, table: &str) -> Result<models::GetTableResult, Error<GetTableError>> {
+pub async fn get_table(configuration: &configuration::Configuration, ns: &str, table: &str) -> Result<models::GetTableResponse, Error<GetTableError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_ns = ns;
     let p_table = table;
@@ -215,8 +215,8 @@ pub async fn get_table(configuration: &configuration::Configuration, ns: &str, t
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetTableResult`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetTableResult`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetTableResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetTableResponse`")))),
         }
     } else {
         let content = resp.text().await?;

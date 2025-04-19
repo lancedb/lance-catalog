@@ -258,7 +258,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/GetTableResult'
+            $ref: '#/components/schemas/GetTableResponse'
       description: Table properties result when loading a table
     BadRequestErrorResponse:
       content:
@@ -450,7 +450,7 @@ components:
           nullable: true
       required:
       - namespace
-    GetTableResult:
+    GetTableResponse:
       description: |
         Result used when a table is successfully loaded.
       example:

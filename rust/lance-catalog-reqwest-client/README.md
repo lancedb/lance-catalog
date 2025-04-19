@@ -46,7 +46,7 @@ Class | Method | HTTP request | Description
  - [CreateNamespaceResponse](docs/CreateNamespaceResponse.md)
  - [ErrorModel](docs/ErrorModel.md)
  - [GetNamespaceResponse](docs/GetNamespaceResponse.md)
- - [GetTableResult](docs/GetTableResult.md)
+ - [GetTableResponse](docs/GetTableResponse.md)
  - [ListNamespacesResponse](docs/ListNamespacesResponse.md)
 
 

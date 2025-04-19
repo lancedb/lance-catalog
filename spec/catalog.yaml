@@ -295,7 +295,7 @@ components:
           default: { }
           nullable: true
 
-    GetTableResult:
+    GetTableResponse:
       description: |
         Result used when a table is successfully loaded.
       type: object
@@ -349,7 +349,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/GetTableResult'
+            $ref: '#/components/schemas/GetTableResponse'
 
     BadRequestErrorResponse:
       description:

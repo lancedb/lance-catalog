@@ -5,7 +5,7 @@ docs/CreateNamespaceRequest.md
 docs/CreateNamespaceResponse.md
 docs/ErrorModel.md
 docs/GetNamespaceResponse.md
-docs/GetTableResult.md
+docs/GetTableResponse.md
 docs/ListNamespacesResponse.md
 docs/NamespaceApi.md
 pom.xml
@@ -29,5 +29,5 @@ src/main/java/com/lancedb/lance/catalog/client/apache/model/CreateNamespaceReque
 src/main/java/com/lancedb/lance/catalog/client/apache/model/CreateNamespaceResponse.java
 src/main/java/com/lancedb/lance/catalog/client/apache/model/ErrorModel.java
 src/main/java/com/lancedb/lance/catalog/client/apache/model/GetNamespaceResponse.java
-src/main/java/com/lancedb/lance/catalog/client/apache/model/GetTableResult.java
+src/main/java/com/lancedb/lance/catalog/client/apache/model/GetTableResponse.java
 src/main/java/com/lancedb/lance/catalog/client/apache/model/ListNamespacesResponse.java

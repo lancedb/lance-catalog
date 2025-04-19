@@ -1,6 +1,6 @@
 
 
-# GetTableResult
+# GetTableResponse
 
 Result used when a table is successfully loaded. 
 

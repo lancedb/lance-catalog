@@ -1,4 +1,4 @@
-# GetTableResult
+# GetTableResponse
 
 ## Properties
 
